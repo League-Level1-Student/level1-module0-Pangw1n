@@ -60,12 +60,35 @@ public class RainGame extends PApplet {
 
     @Override
     public void setup() {
-
+		y = -1000;
+		x = (int) random(WIDTH);
     }
 
     @Override
     public void draw() {
-
+    	background(255, 255, 255);
+    	fill(0, 200, 255);
+    	stroke(0,150,255);
+    	ellipse(x, y, 10, 30);
+    	
+    	y += 10;
+    	if (y > 500) {
+    		checkCatch(x);
+    		y = 0;
+    		x = (int) random(WIDTH);
+    	}
+    	
+    	
+    	
+    	fill(200, 200, 200);
+    	stroke(100, 100, 100);
+    	rect(mouseX, 500, bucketWidth, 50);
+    	
+    	
+    	
+    	fill(0, 0, 0);
+        textSize(16);
+        text("Score: " + score, 20, 20);
     }
 
     static public void main(String[] args) {

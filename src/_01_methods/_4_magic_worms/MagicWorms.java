@@ -31,7 +31,8 @@ import processing.core.PApplet;
  */
 public class MagicWorms extends PApplet {
     static final int WIDTH = 600;
-    static final int HEIGHT = 400;
+    static final int HEIGHT = 600;
+    int worms = 300;
 
     @Override
     public void settings() {
@@ -40,12 +41,21 @@ public class MagicWorms extends PApplet {
 
     @Override
     public void setup() {
-
+    	
     }
 
     @Override
     public void draw() {
-
+        background(0, 0, 0);
+        makeMagical();
+    	for(int i = 0; i < worms; i ++) {
+            fill(frameCount, i, 0);
+    		ellipse(getWormX(i), getWormY(i), 10, 10);
+    	}
+    	
+    	if(mousePressed) {
+    		worms += 1;
+    	}
     }
 
     static public void main(String[] args) {

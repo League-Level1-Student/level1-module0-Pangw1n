@@ -10,17 +10,21 @@ public class FlappyBird extends PApplet {
     int y;
     float yvel;
     float gravity;
+    int score = 0;
 
     int pipeX;
     int topPipeHeight;
     int pipeGap;
     int bottomPipeHeight;
+	int bottomPipePosition;
     
     PImage Bird;
     PImage topPipe;
     PImage bottomPipe;
     
     boolean gamestart = true;
+    
+    boolean canGetPoint = true;
 
     @Override
     public void settings() {
@@ -48,28 +52,36 @@ public class FlappyBird extends PApplet {
     	if (gamestart)
     	{
     		background(0, 200, 255);
+    		bottomPipePosition = topPipeHeight + pipeGap;
         	topPipe.resize(100, topPipeHeight);
         	bottomPipe.resize(100, bottomPipeHeight);
             image(topPipe, pipeX, 0);
-            image(bottomPipe, pipeX, topPipeHeight + pipeGap);
+            image(bottomPipe, pipeX, bottomPipePosition);
         	image(Bird, x, y);
         	
-        	
+        	textSize(50);
+        	text(score, 0,50);
         	
             yvel += gravity;
         	y += yvel;
+        	pipeX -= 5;
         	
         	if (y > HEIGHT) {
         		gamestart = false;
         	}
         	
-        	pipeX -= 5;
         	if (pipeX < -100) {
         		resetPipes();
+        		canGetPoint = true;
         	}
         	
         	if (intersectsPipes()) {
         		gamestart = false;
+        	}
+        	
+        	if (pipeX + 100 < x && canGetPoint) {
+        		score ++;
+        		canGetPoint = false;
         	}
     	}
     }
@@ -85,9 +97,9 @@ public class FlappyBird extends PApplet {
     }
     
     boolean intersectsPipes() { 
-        if (y + 25 < topPipeHeight && x > pipeX && x < (pipeX+100)){
+        if (y + 30  < topPipeHeight && x + 30 > pipeX && x + 30 < (pipeX+100)){
            return true; }
-       else if (y + 25>bottomPipeHeight && x > pipeX && x < (pipeX+100)) {
+       else if (y + 30 > bottomPipePosition && x + 30 > pipeX && x + 30 < (pipeX+100)) {
            return true; }
        else { return false; }
 }
